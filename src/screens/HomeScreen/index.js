@@ -4,9 +4,15 @@ import {
     Text
 } from "react-native";
 
+import Picture from '../../components/homeComponents/Picture/'
+import Actions from '../../components/homeComponents/Actions/'
+
+import styles from './styles'
+
 const HomeScreen = (props) => (
-    <View>
-        <Text>HomeScreen</Text>
+    <View style={styles.containerStyle}>
+        <Picture />
+        <Actions />
     </View>
 )
 export default HomeScreen;
