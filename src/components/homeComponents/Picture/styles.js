@@ -21,25 +21,36 @@ const styles = StyleSheet.create({
     textContainerStyle: {
         borderWidth: 1,
         position: 'absolute',
-        top: 50,
+        borderRadius: 5,
     },
 
     matchContainerTextStyle: {
-        left: 40,
+        right: 40,
+        top: 50,
         borderColor: 'green',
-        transform: [{ rotate: '-10deg' }]
+        transform: [{ rotate: '10deg' }]
     },
 
     unmatchContainerTextStyle: {
-        right: 40,
+        left: 40,
+        top: 50,
         borderColor: 'red',
-        transform: [{ rotate: '10deg' }]
+        transform: [{ rotate: '-10deg' }]
+    },
+
+    superLikeContainerTextStyle: {
+        borderColor: 'blue',
+        bottom: 50,
+        left: windowWidth / 2 - 80,
+        width: '40%',
+        transform: [{ rotate: '-10deg' }],
+
     },
 
     textStyle: {
         fontSize: 32,
         paddingHorizontal: 10,
-
+        textAlign: 'center',
     },
 })
 
