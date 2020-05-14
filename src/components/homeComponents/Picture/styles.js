@@ -16,7 +16,31 @@ const styles = StyleSheet.create({
         height: undefined,
         width: undefined,
         flex: 1,
-    }
+    },
+
+    textContainerStyle: {
+        borderWidth: 1,
+        position: 'absolute',
+        top: 50,
+    },
+
+    matchContainerTextStyle: {
+        left: 40,
+        borderColor: 'green',
+        transform: [{ rotate: '-10deg' }]
+    },
+
+    unmatchContainerTextStyle: {
+        right: 40,
+        borderColor: 'red',
+        transform: [{ rotate: '10deg' }]
+    },
+
+    textStyle: {
+        fontSize: 32,
+        paddingHorizontal: 10,
+
+    },
 })
 
 export default styles;

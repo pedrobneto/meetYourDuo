@@ -48,7 +48,13 @@ const HomeTabNavigator = () => (
         })}
     >
         <AppTabs.Screen name='Profile' component={ProfileScreen} />
-        <AppTabs.Screen name='Home' component={HomeScreen} />
+        <AppTabs.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{
+                gestureEnabled: false,
+            }}
+        />
         <AppTabs.Screen name='Match' component={MatchScreen} />
     </AppTabs.Navigator >
 )

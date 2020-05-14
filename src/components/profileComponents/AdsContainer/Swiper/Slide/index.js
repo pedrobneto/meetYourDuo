@@ -6,16 +6,16 @@ import {
 } from "react-native";
 
 import styles from './styles'
+import Title from './Title/index'
 
-const Title = (props) => (
+const Slide = (props) => (
     <View style={styles.container}>
-
-        {props.children}
-
+        <Title text={props.text} >
+            {props.children}
+        </Title>
         <Text>
-            {props.text}
+            {props.descriptionText}
         </Text>
     </View>
 )
-
-export default Title;
+export default Slide;
