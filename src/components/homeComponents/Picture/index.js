@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import {
     View,
     Text,
@@ -29,11 +29,11 @@ const Picture = (props) => {
             },
             onPanResponderRelease: (evt, gestureState) => {
                 if (gestureState.dx > 120 && gestureState.vx > 0.3) {
-                    dislike(evt, gestureState)
+                    dislike(gestureState.dy)
                 } else if (gestureState.dx < -120 && gestureState.vx < -0.3) {
-                    like(evt, gestureState)
+                    like(gestureState.dy)
                 } else if (gestureState.dy < -200 && gestureState.vy < -0.3) {
-                    superLike(evt, gestureState)
+                    superLike(gestureState.dx)
                 } else {
                     Animated.spring(pan, {
                         toValue: { x: 0, y: 0 },
@@ -67,33 +67,52 @@ const Picture = (props) => {
         extrapolate: 'clamp'
     })
 
-    function like(evt, gestureState) {
+    useEffect(() => {
+        switch (props.animation) {
+            case 'like':
+                like(0)
+                break;
+            case 'dislike':
+                dislike(0)
+                break;
+            case 'superLike':
+                superLike(0)
+                break;
+            default:
+                console.log('Invalid string')
+        }
+    }, [props.animation]);
+
+    function like(distance) {
         Animated.spring(pan, {
-            toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
+            toValue: { x: -SCREEN_WIDTH - 100, y: distance },
+            tension: 1,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
-            }).start()
+            }).start(() => props.animationText(''))
         })
     }
 
-    function dislike(evt, gestureState) {
+    function dislike(distance) {
         Animated.spring(pan, {
-            toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
+            toValue: { x: SCREEN_WIDTH + 100, y: distance },
+            tension: 1,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
-            }).start()
+            }).start(() => props.animationText(''))
         })
     }
 
-    function superLike(evt, gestureState) {
+    function superLike(distance) {
         Animated.spring(pan, {
-            toValue: { x: gestureState.dx, y: -SCREEN_HEIGHT - 100 }
+            toValue: { x: distance, y: -SCREEN_HEIGHT - 100 },
+            tension: 1,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
-            }).start()
+            }).start(() => props.animationText(''))
         })
     }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     Text
@@ -9,10 +9,20 @@ import Actions from '../../components/homeComponents/Actions/'
 
 import styles from './styles'
 
-const HomeScreen = (props) => (
-    <View style={styles.containerStyle}>
-        <Picture />
-        <Actions />
-    </View>
-)
+const HomeScreen = (props) => {
+
+    const [animation, setAnimation] = useState('')
+
+    function animate(animation) {
+        setAnimation(animation)
+        console.log(animation)
+    }
+
+    return (
+        <View style={styles.containerStyle}>
+            <Picture animation={animation} animationText={animate} />
+            <Actions animation={animate} />
+        </View>
+    )
+}
 export default HomeScreen;
