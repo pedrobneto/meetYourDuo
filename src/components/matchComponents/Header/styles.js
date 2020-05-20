@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         height: screenHeight / 15,
         width: '100%',
         flexDirection: 'row',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         borderColor: colors.lightGray,
         alignItems: 'center',
         justifyContent: 'space-around',

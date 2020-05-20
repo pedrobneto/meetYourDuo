@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         flex: 10,
         height: '100%',
         justifyContent: 'center',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         borderColor: 'red',
     },
 
