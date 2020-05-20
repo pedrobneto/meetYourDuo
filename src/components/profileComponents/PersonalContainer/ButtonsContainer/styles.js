@@ -1,13 +1,12 @@
-import { StyleSheet, Dimensions } from 'react-native'
-
-const screenWidth = Dimensions.get('screen').width
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: screenWidth,
+        width: '100%',
         flex: 5,
-        alignItems: 'center',
+        marginTop: 20,
+        alignItems: 'flex-start',
         justifyContent: 'space-around',
     }
 });

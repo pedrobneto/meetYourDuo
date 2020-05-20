@@ -5,8 +5,9 @@ const screenWidth = Dimensions.get('screen').width
 const styles = StyleSheet.create({
     container: {
         flex: 5,
+        zIndex: 100,
         marginTop: 30,
-        width: screenWidth / 2,
+        width: '50%',
         alignItems: 'center',
     },
 
@@ -19,10 +20,10 @@ const styles = StyleSheet.create({
 
     informationContainer: {
         width: screenWidth / 2,
-        height: screenWidth / 7,
+        height: '30%',
         marginTop: 5,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
 
     nameTextStyle: {
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     },
 
     jobTextStyle: {
+        marginTop: 5,
         fontSize: 18,
     },
 

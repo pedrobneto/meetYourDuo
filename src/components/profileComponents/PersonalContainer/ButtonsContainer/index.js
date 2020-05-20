@@ -28,7 +28,7 @@ const ButtonsContainer = (props) => (
             />
         </Button>
         <Button
-            margin={50}
+            margin={30}
             color={colors.pink}
             text={'ADICIONAR MÍDIA'}
         >

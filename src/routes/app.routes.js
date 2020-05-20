@@ -2,6 +2,8 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { Provider } from 'react-redux'
+import store from '../store/index'
 
 import { Fontisto, FontAwesome, AntDesign } from '@expo/vector-icons';
 
@@ -16,9 +18,11 @@ import styles from './styles'
 import colors from '../util/colors'
 
 const AppRoutes = () => (
-    <AppStack.Navigator screenOptions={{ headerShown: false }}>
-        <AppStack.Screen name='HomeTabNavigator' component={HomeTabNavigator} />
-    </AppStack.Navigator >
+    <Provider store={store}>
+        <AppStack.Navigator screenOptions={{ headerShown: false }}>
+            <AppStack.Screen name='HomeTabNavigator' component={HomeTabNavigator} />
+        </AppStack.Navigator>
+    </Provider>
 )
 
 const HomeTabNavigator = () => (
@@ -56,7 +60,7 @@ const HomeTabNavigator = () => (
             }}
         />
         <AppTabs.Screen name='Match' component={MatchScreen} />
-    </AppTabs.Navigator >
+    </AppTabs.Navigator>
 )
 
 export default AppRoutes;

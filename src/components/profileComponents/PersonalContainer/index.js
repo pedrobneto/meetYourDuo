@@ -19,7 +19,7 @@ const screenHeight = Dimensions.get('screen').height
 const PersonalContainer = (props) => (
     <View style={styles.containerStyle}>
         <View style={styles.svgContainerStyle}>
-            <Svg height={screenHeight * 0.7} width={screenWidth}>
+            <Svg height={'110%'} width={'100%'}>
                 <Circle cx={screenWidth / 2} cy="0" r={screenHeight * 0.65} fill="white" />
             </Svg>
         </View>

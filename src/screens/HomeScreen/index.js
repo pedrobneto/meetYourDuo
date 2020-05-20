@@ -15,7 +15,6 @@ const HomeScreen = (props) => {
 
     function animate(animation) {
         setAnimation(animation)
-        console.log(animation)
     }
 
     return (

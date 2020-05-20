@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
 
     textContainerStyle: {
-        borderWidth: 1,
+        borderWidth: 3,
         position: 'absolute',
         borderRadius: 5,
     },
@@ -41,9 +41,12 @@ const styles = StyleSheet.create({
     superLikeContainerTextStyle: {
         borderColor: 'blue',
         bottom: 50,
-        left: windowWidth / 2 - 80,
+        left: '50%',
         width: '40%',
-        transform: [{ rotate: '-10deg' }],
+        transform: [
+            { rotate: '-10deg' },
+            { translateX: -windowWidth * 0.2 }
+        ],
 
     },
 

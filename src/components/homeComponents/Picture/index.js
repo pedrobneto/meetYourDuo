@@ -79,14 +79,14 @@ const Picture = (props) => {
                 superLike(0)
                 break;
             default:
-                console.log('Invalid string')
+                break;
         }
     }, [props.animation]);
 
     function like(distance) {
         Animated.spring(pan, {
             toValue: { x: -SCREEN_WIDTH - 100, y: distance },
-            tension: 1,
+            tension: 3,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
@@ -97,7 +97,7 @@ const Picture = (props) => {
     function dislike(distance) {
         Animated.spring(pan, {
             toValue: { x: SCREEN_WIDTH + 100, y: distance },
-            tension: 1,
+            tension: 3,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
@@ -108,7 +108,7 @@ const Picture = (props) => {
     function superLike(distance) {
         Animated.spring(pan, {
             toValue: { x: distance, y: -SCREEN_HEIGHT - 100 },
-            tension: 1,
+            tension: 3,
         }).start(() => {
             Animated.spring(pan, {
                 toValue: { x: 0, y: 0 },
