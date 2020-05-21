@@ -5,11 +5,28 @@ const windowWidth = Dimensions.get('window').width
 const styles = StyleSheet.create({
     containerStyle: {
         flex: 8,
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         width: windowWidth - 10,
+        zIndex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    backgroundTextStyle: {
+        fontSize: 18,
+        color: 'gray',
+    },
+
+    imageContainerStyle: {
+        flex: 1,
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
         borderRadius: 10,
         elevation: 2,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 
     imageStyle: {

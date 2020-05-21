@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -9,14 +9,15 @@ import {
 } from "react-native";
 
 import styles from './styles'
+import profiles from '../../../data'
 
 const SCREEN_WIDTH = Dimensions.get('screen').width
 const SCREEN_HEIGHT = Dimensions.get('screen').height
-const IMAGE_URL = 'https://br.web.img3.acsta.net/pictures/17/02/06/17/01/343859.jpg'
 
 const Picture = (props) => {
 
     const pan = useRef(new Animated.ValueXY()).current
+    const [index, setIndex] = useState(0);
 
     const panResponder = useRef(
         PanResponder.create({
@@ -67,8 +68,9 @@ const Picture = (props) => {
         extrapolate: 'clamp'
     })
 
+    // Animates when the user clicks the buttons based on the animationText prop
     useEffect(() => {
-        switch (props.animation) {
+        switch (props.animationText) {
             case 'like':
                 like(0)
                 break;
@@ -83,91 +85,141 @@ const Picture = (props) => {
         }
     }, [props.animation]);
 
+    useEffect(() => {
+        if (index > profiles.length - 1) {
+            setIndex(0)
+        }
+    }, [index])
+
+    function updateIndex() {
+        // Update the index
+        setIndex(index => index + 1)
+
+        // Sets the animation to the default value so it doesn't animate again
+        props.animation('')
+
+        // Resets image position
+        pan.setValue({ x: 0, y: 0 })
+    }
+
     function like(distance) {
         Animated.spring(pan, {
             toValue: { x: -SCREEN_WIDTH - 100, y: distance },
             tension: 3,
         }).start(() => {
-            Animated.spring(pan, {
-                toValue: { x: 0, y: 0 },
-            }).start(() => props.animationText(''))
+            updateIndex()
         })
     }
 
     function dislike(distance) {
         Animated.spring(pan, {
             toValue: { x: SCREEN_WIDTH + 100, y: distance },
-            tension: 3,
+            tension: 20,
         }).start(() => {
-            Animated.spring(pan, {
-                toValue: { x: 0, y: 0 },
-            }).start(() => props.animationText(''))
+            updateIndex()
         })
     }
 
     function superLike(distance) {
         Animated.spring(pan, {
             toValue: { x: distance, y: -SCREEN_HEIGHT - 100 },
-            tension: 3,
+            tension: 20,
         }).start(() => {
-            Animated.spring(pan, {
-                toValue: { x: 0, y: 0 },
-            }).start(() => props.animationText(''))
+            updateIndex()
         })
     }
 
+    function renderProfiles() {
+        return profiles.map((profile) => {
+
+            // If the image was already swiped, don't show it
+            if (profile.id < index) {
+                return null
+            }
+            // If it's the current image, render it with the pan responder and the animated texts
+            else if (profile.id == index) {
+                return (
+                    <Animated.View
+                        key={profile.id}
+                        style={[
+                            styles.imageContainerStyle,
+                            { transform: [{ translateX: pan.x }, { translateY: pan.y }, { rotate: rotate }] }
+                        ]}
+                        {...panResponder.panHandlers}
+                    >
+                        <Image
+                            style={styles.imageStyle}
+                            resizeMode='cover'
+                            source={{ uri: profile.uri }}
+                        />
+
+                        <Animated.View
+                            style={[
+                                styles.textContainerStyle,
+                                styles.matchContainerTextStyle,
+                                { opacity: matchTextOpacity }
+                            ]}
+                        >
+                            <Text style={[styles.textStyle, { color: 'green' }]}>
+                                LIKE
+                        </Text>
+                        </Animated.View>
+
+                        <Animated.View
+                            style={[
+                                styles.textContainerStyle,
+                                styles.unmatchContainerTextStyle,
+                                { opacity: unmatchTextOpacity }
+                            ]}
+                        >
+                            <Text style={[styles.textStyle, { color: 'red' }]}>
+                                NOPE
+                        </Text>
+                        </Animated.View>
+
+                        <Animated.View
+                            style={[
+                                styles.textContainerStyle,
+                                styles.superLikeContainerTextStyle,
+                                { opacity: superLikeTextOpacity }
+                            ]}
+                        >
+                            <Text style={[styles.textStyle, { color: 'blue' }]}>
+                                SUPER LIKE
+                        </Text>
+                        </Animated.View>
+
+
+                    </Animated.View>
+                )
+            }
+            else {
+                return (
+                    // If the image is under it, don't load the pan responder
+                    <Animated.View
+                        key={profile.id}
+                        style={[
+                            styles.imageContainerStyle,
+                        ]}
+                    >
+                        <Image
+                            style={styles.imageStyle}
+                            resizeMode='cover'
+                            source={{ uri: profile.uri }}
+                        />
+                    </Animated.View>
+                )
+            }
+        }).reverse()
+    }
+
     return (
-        <Animated.View
-            style={[
-                styles.containerStyle,
-                { transform: [{ translateX: pan.x }, { translateY: pan.y }, { rotate: rotate }] }
-            ]}
-            {...panResponder.panHandlers}
-        >
-            <Image
-                style={styles.imageStyle}
-                resizeMode='cover'
-                source={{ uri: IMAGE_URL }}
-            />
-
-            <Animated.View
-                style={[
-                    styles.textContainerStyle,
-                    styles.matchContainerTextStyle,
-                    { opacity: matchTextOpacity }
-                ]}
-            >
-                <Text style={[styles.textStyle, { color: 'green' }]}>
-                    LIKE
-                </Text>
-            </Animated.View>
-
-            <Animated.View
-                style={[
-                    styles.textContainerStyle,
-                    styles.unmatchContainerTextStyle,
-                    { opacity: unmatchTextOpacity }
-                ]}
-            >
-                <Text style={[styles.textStyle, { color: 'red' }]}>
-                    NOPE
-                </Text>
-            </Animated.View>
-
-            <Animated.View
-                style={[
-                    styles.textContainerStyle,
-                    styles.superLikeContainerTextStyle,
-                    { opacity: superLikeTextOpacity }
-                ]}
-            >
-                <Text style={[styles.textStyle, { color: 'blue' }]}>
-                    SUPER LIKE
-                </Text>
-            </Animated.View>
-
-
-        </Animated.View>
+        <View style={styles.containerStyle}>
+            <Text style={styles.backgroundTextStyle}>
+                Não há mais ninguém por perto :(
+            </Text>
+            {renderProfiles()}
+        </View>
     )
 }
 

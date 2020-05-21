@@ -19,7 +19,7 @@ const HomeScreen = (props) => {
 
     return (
         <View style={styles.containerStyle}>
-            <Picture animation={animation} animationText={animate} />
+            <Picture animation={animate} animationText={animation} />
             <Actions animation={animate} />
         </View>
     )

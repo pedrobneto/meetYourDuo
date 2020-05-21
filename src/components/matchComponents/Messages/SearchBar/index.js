@@ -7,6 +7,7 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles'
+import profiles from '../../../../data/'
 
 const SearchBar = (props) => (
     <View style={styles.containerStyle}>
@@ -16,7 +17,7 @@ const SearchBar = (props) => (
         <View style={styles.inputContainerStyle}>
             <TextInput
                 style={styles.inputStyle}
-                placeholder='Buscar 10 Matches'
+                placeholder={`Buscar ${profiles.length} matches`}
                 selectionColor='red'
             />
         </View>
