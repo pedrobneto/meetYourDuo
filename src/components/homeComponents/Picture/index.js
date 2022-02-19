@@ -38,6 +38,7 @@ const Picture = (props) => {
                 } else {
                     Animated.spring(pan, {
                         toValue: { x: 0, y: 0 },
+                        useNativeDriver: true
                     }).start()
                 }
             }
@@ -46,7 +47,7 @@ const Picture = (props) => {
 
     const rotate = pan.x.interpolate({
         inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-        outputRange: ['10deg', '0deg', '-10deg'],
+        outputRange: ['-10deg', '0deg', '10deg'],
         extrapolate: 'clamp'
     })
 
@@ -65,6 +66,18 @@ const Picture = (props) => {
     const superLikeTextOpacity = pan.y.interpolate({
         inputRange: [-SCREEN_HEIGHT / 2, 0, SCREEN_HEIGHT / 2],
         outputRange: [1, 0, 0],
+        extrapolate: 'clamp'
+    })
+
+    const backCardOpacity = Animated.add(pan.x, pan.y).interpolate({
+        inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+        outputRange: [1, 0.5, 1],
+        extrapolate: 'clamp'
+    })
+
+    const backCardScale = Animated.add(pan.x, pan.y).interpolate({
+        inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+        outputRange: [1, 0.9, 1],
         extrapolate: 'clamp'
     })
 
@@ -106,6 +119,7 @@ const Picture = (props) => {
         Animated.spring(pan, {
             toValue: { x: -SCREEN_WIDTH - 100, y: distance },
             tension: 3,
+            useNativeDriver: true
         }).start(() => {
             updateIndex()
         })
@@ -115,6 +129,7 @@ const Picture = (props) => {
         Animated.spring(pan, {
             toValue: { x: SCREEN_WIDTH + 100, y: distance },
             tension: 20,
+            useNativeDriver: true
         }).start(() => {
             updateIndex()
         })
@@ -124,6 +139,7 @@ const Picture = (props) => {
         Animated.spring(pan, {
             toValue: { x: distance, y: -SCREEN_HEIGHT - 100 },
             tension: 20,
+            useNativeDriver: true
         }).start(() => {
             updateIndex()
         })
@@ -133,7 +149,7 @@ const Picture = (props) => {
         return profiles.map((profile) => {
 
             // If the image was already swiped, don't show it
-            if (profile.id < index) {
+            if (profile.id < index || profile.id - index > 1) {
                 return null
             }
             // If it's the current image, render it with the pan responder and the animated texts
@@ -162,7 +178,7 @@ const Picture = (props) => {
                         >
                             <Text style={[styles.textStyle, { color: 'green' }]}>
                                 LIKE
-                        </Text>
+                            </Text>
                         </Animated.View>
 
                         <Animated.View
@@ -174,7 +190,7 @@ const Picture = (props) => {
                         >
                             <Text style={[styles.textStyle, { color: 'red' }]}>
                                 NOPE
-                        </Text>
+                            </Text>
                         </Animated.View>
 
                         <Animated.View
@@ -186,7 +202,7 @@ const Picture = (props) => {
                         >
                             <Text style={[styles.textStyle, { color: 'blue' }]}>
                                 SUPER LIKE
-                        </Text>
+                            </Text>
                         </Animated.View>
 
 
@@ -200,6 +216,7 @@ const Picture = (props) => {
                         key={profile.id}
                         style={[
                             styles.imageContainerStyle,
+                            { opacity: backCardOpacity, transform: [{ scale: backCardScale }] }
                         ]}
                     >
                         <Image
@@ -215,9 +232,6 @@ const Picture = (props) => {
 
     return (
         <View style={styles.containerStyle}>
-            <Text style={styles.backgroundTextStyle}>
-                Não há mais ninguém por perto :(
-            </Text>
             {renderProfiles()}
         </View>
     )
